@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  sudeb-bot:
+    build: .
+    container_name: sudeb-bot
+    restart: unless-stopped
+    environment:
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - GIGACHAT_API_KEY=${GIGACHAT_API_KEY}
+    volumes:
+      - ./pdfs:/app/pdfs
+      - ./chroma_db:/app/chroma_db
+    networks:
+      - sudeb-network
+
+networks:
+  sudeb-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
